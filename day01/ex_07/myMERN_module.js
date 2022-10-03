@@ -30,6 +30,8 @@ exports.update = function (name, content) {
         if (err) {
             return console.log('Update "' + name +'" : KO');
         }
+        if (content == undefined)
+            content = "";
         fs.writeFile(resolve(name), content, function (err) {
             if (err) {
                 return console.log('Update "' + name +'" : KO');
@@ -67,7 +69,7 @@ app.post('/files/:name?', function(req, res) {
 
 app.put('/files/:name?/:content?', function(req, res) {
     exports.update(req.params.name, req.params.content);
-    res.send("PUT : " + name + " | " + content);
+    res.send("PUT : " + req.params.name + " | " + req.params.content);
 });
 
 app.delete('/files/:name?', function(req, res) {

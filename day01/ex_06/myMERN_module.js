@@ -30,6 +30,8 @@ exports.update = function (name, content) {
         if (err) {
             return console.log('Update "' + name +'" : KO');
         }
+        if (content == undefined)
+            content = "";
         fs.writeFile(resolve(name), content, function (err) {
             if (err) {
                 return console.log('Update "' + name +'" : KO');
