@@ -31,5 +31,3 @@ app.listen(config.app.port, config.app.ip, function(err){
     if (err) console.log("Error in server setup")
     console.log("Server listening on Port", config.app.port);
 })
-
-console.log(config.app.name);
