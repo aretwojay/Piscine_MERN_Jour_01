@@ -7,6 +7,41 @@
     <title>Document</title>
 </head>
 <body>
-    <p>Hello World</p>
+    <!DOCTYPE html>
+    <html lang="en" dir="ltr">
+      
+    <head>
+        <meta charset="utf-8">
+        <title>Calculator</title>
+    </head>
+      
+    <body>
+        <h1>Post Request</h1>
+        <form action="/files/create" method="POST">
+            <input type="text">
+                  
+            <button type="submit" name="submit">
+                calculator
+            </button>
+        </form>
+        <h1>Put Request</h1>
+        <form action="/files/create/hello?_method=PUT" method="POST">
+            <input type="text">
+                  
+            <button type="submit" name="submit">
+                calculator
+            </button>
+        </form>
+        <h1>Delete Request</h1>
+        <form action="/files/create?_method=DELETE" method="POST">
+            <input type="text">
+                  
+            <button type="submit" name="submit">
+                calculator
+            </button>
+        </form>
+    </body>
+      
+    </html>
 </body>
 </html>
