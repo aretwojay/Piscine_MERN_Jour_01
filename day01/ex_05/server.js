@@ -7,10 +7,10 @@ const {resolve} = require('path');
 process.env.NODE_ENV = "development";
 
 app.get('/name/:name?', function(req, res) {
-    let name;
-    req.params.name !== undefined ? 
-    name = req.params.name : name = "unknown"; 
-    
+    let name, age;
+    req.params.name !== undefined ? name = req.params.name : name = "unknown"; 
+    req.query.age !== undefined ? age = "you have " + req.query.age + " yo" : age = "i dont know your age"; 
+
     res.type('html');
     res.write(`<!DOCTYPE html>
 <html lang="en">
@@ -21,7 +21,7 @@ app.get('/name/:name?', function(req, res) {
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello `+name+`</h1>
+    <h1>Hello `+name+`, ` + age + `</h1>
 </body>
 </html>`);
     res.end();
