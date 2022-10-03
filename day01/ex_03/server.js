@@ -1,16 +1,18 @@
 const http = require('http');
 const express = require('express');
-const app = express();
 const fs = require('fs');
+const app = express();
 const config = require('./config');
+const {resolve} = require('path');
 
 process.env.NODE_ENV = "development";
 
 app.get('/', function(req, res) {
-    res.send('Great ! It works.');
-  });
+  res.sendFile(resolve('index.html'));
+});
 
-app.listen(config.app.port, 'localhost', function(err){
+
+app.listen(config.app.port, config.app.ip, function(err){
     if (err) console.log("Error in server setup")
     console.log("Server listening on Port", config.app.port);
 })
