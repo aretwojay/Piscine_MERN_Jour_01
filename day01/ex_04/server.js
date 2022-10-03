@@ -6,9 +6,23 @@ const {resolve} = require('path');
 
 process.env.NODE_ENV = "development";
 
-app.get('/name/:name', function(req, res) {
+app.get('/name/:name?', function(req, res) {
+    let name;
+    req.params.name !== undefined ? name = req.params.name : name = "unknown"; 
     res.type('html');
-    res.send('index');
+    res.write(`<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello `+name+`</h1>
+</body>
+</html>`);
+    res.end();
   });
 
 app.listen(config.app.port, config.app.ip, function(err){
