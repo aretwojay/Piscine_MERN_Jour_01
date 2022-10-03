@@ -26,11 +26,16 @@ exports.read = function (name) {
 };
 
 exports.update = function (name, content) {
-    fs.writeFile(resolve(name), content,{encoding: 'utf-8'}, function (err, data) {
+    fs.readFile(resolve(name), {encoding: 'utf-8'}, function (err) {
         if (err) {
             return console.log('Update "' + name +'" : KO');
         }
-        console.log('Update "' + name +'" : OK');
+        fs.writeFile(resolve(name), content, function (err) {
+            if (err) {
+                return console.log('Update "' + name +'" : KO');
+            }
+            console.log('Update "' + name +'" : OK');
+        });
     });
 };
 

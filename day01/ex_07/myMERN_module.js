@@ -26,11 +26,16 @@ exports.read = function (name) {
 };
 
 exports.update = function (name, content) {
-    fs.writeFile(resolve(name), content,{encoding: 'utf-8'}, function (err, data) {
+    fs.readFile(resolve(name), {encoding: 'utf-8'}, function (err) {
         if (err) {
             return console.log('Update "' + name +'" : KO');
         }
-        console.log('Update "' + name +'" : OK');
+        fs.writeFile(resolve(name), content, function (err) {
+            if (err) {
+                return console.log('Update "' + name +'" : KO');
+            }
+            console.log('Update "' + name +'" : OK');
+        });
     });
 };
 
@@ -43,47 +48,31 @@ exports.delete = function (name) {
    });  
 };
 
-const methodOverride = require("method-override");
-app.use(methodOverride('_method'));
+// const methodOverride = require("method-override");
+// app.use(methodOverride('_method'));
 
-
-app.get('/', function(req, res) {
-    res.sendFile(resolve("index.html"));
-});
+// app.get('/', function(req, res) {
+//     res.sendFile(resolve("index.html"));
+// });
 
 app.get('/files/:name?', function(req, res) {
-    let name;
-    req.params.name !== undefined ? 
-    name = req.params.name : name = "unknown";
-    exports.read(name);
-    res.send("GET : " + name);
+    exports.read(req.params.name);
+    res.send("GET : " + req.params.name);
 });
 
 app.post('/files/:name?', function(req, res) {
-    let name;
-    req.params.name !== undefined ? 
-    name = req.params.name : name = "";
-    exports.create(name);
-    res.send("POST : " + name);
+    exports.create(req.params.name);
+    res.send("POST : " + req.params.name);
 });
 
 app.put('/files/:name?/:content?', function(req, res) {
-    let name, content;
-    req.params.name !== undefined ? 
-    name = req.params.name : name = "";
-
-    req.params.content !== undefined ? 
-    content = req.params.content : content = "";
-    exports.update(name, content);
+    exports.update(req.params.name, req.params.content);
     res.send("PUT : " + name + " | " + content);
 });
 
 app.delete('/files/:name?', function(req, res) {
-    let name;
-    req.params.name !== undefined ? 
-    name = req.params.name : name = "";
-    exports.delete(name);
-    res.send("DELETE : " + name);
+    exports.delete(req.params.name, req.params.content);
+    res.send("DELETE : " + req.params.name);
 });
 
 app.listen(config.app.port, config.app.ip, function(err){
