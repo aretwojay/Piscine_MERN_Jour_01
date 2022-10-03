@@ -7,9 +7,11 @@ const {resolve} = require('path');
 process.env.NODE_ENV = "development";
 
 app.get('/name/:name?', function(req, res) {
-    let name;
-    req.params.name !== undefined ? 
-    name = req.params.name : name = "unknown"; 
+    let name = req.params.name;
+    if (name === undefined)
+    {
+      name = "unknown";
+    }
     
     res.type('html');
     res.write(`<!DOCTYPE html>
